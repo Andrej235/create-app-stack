@@ -1,11 +1,13 @@
-import { Button } from "@repo/ui/button";
+import { Button } from "@repo/ui/common/button";
 
 export default function Home() {
   return (
     <div>
-      <div className="bg-amber-300">Hello World!</div>
+      <div className="grid h-12 w-full place-self-center bg-amber-300 text-black">
+        <div className="max-w-max">Hello World!</div>
+      </div>
 
-      <Button />
+      <Button>Click me!</Button>
     </div>
   );
 }
