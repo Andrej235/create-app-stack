@@ -1,10 +1,9 @@
 {
-  "name": "@repo/ui",
+  "name": "@repo/utils",
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx",
-    "./globals.css": "./src/globals.css"
+    "./*": "./src/*.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -20,8 +19,7 @@
     "typescript": "5.9.2"
   },
   "dependencies": {
-    "@repo/utils": "*",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
   }
 }

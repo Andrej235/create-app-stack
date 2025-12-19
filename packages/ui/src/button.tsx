@@ -1,20 +1,14 @@
 "use client";
 
-import { ReactNode } from "react";
+import { cn } from "@repo/utils/cn";
 
-interface ButtonProps {
-  children: ReactNode;
-  className?: string;
-  appName: string;
-}
-
-export const Button = ({ children, className, appName }: ButtonProps) => {
+export const Button = ({ className }: { className?: string }) => {
   return (
     <button
-      className={className}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
+      onClick={() => alert(`Hello from your app!`)}
+      className={cn("px-4 py-2 bg-blue-500 text-white rounded-md", className)}
     >
-      {children}
+      Click me
     </button>
   );
 };
