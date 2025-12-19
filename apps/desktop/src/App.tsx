@@ -2,7 +2,7 @@ import { Button } from "@repo/ui/common/button";
 
 function App() {
   return (
-    <div className="size-full bg-amber-300">
+    <div className="size-full min-h-screen bg-background">
       <Button>Hello</Button>
     </div>
   );

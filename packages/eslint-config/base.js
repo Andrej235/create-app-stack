@@ -18,12 +18,31 @@ export const config = [
       turbo: turboPlugin,
     },
     rules: {
-      "turbo/no-undeclared-env-vars": "warn",
+      "turbo/no-undeclared-env-vars": "error",
     },
   },
   {
-    plugins: {
-      onlyWarn,
+    rules: {
+      // Treat unused variables and params as errors
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+      "no-unused-vars": "off", // Turn off base rule as it can report incorrect errors
+
+      // Additional strict rules
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      "no-debugger": "error",
+      "no-alert": "error",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/no-non-null-assertion": "error",
+      "prefer-const": "error",
+      "no-var": "error",
     },
   },
   {

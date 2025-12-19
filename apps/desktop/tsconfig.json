@@ -1,4 +1,4 @@
 {
   "extends": "@repo/typescript-config/tauri.json",
-  "include": ["src"],
+  "include": ["src"]
 }
