@@ -1,11 +1,10 @@
 import { Button } from "@repo/ui/common/button";
+import { JSX } from "react";
 
-function App() {
+export function App(): JSX.Element {
   return (
     <div className="size-full min-h-screen bg-background">
       <Button>Hello</Button>
     </div>
   );
 }
-
-export default App;

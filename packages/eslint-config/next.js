@@ -1,62 +1,37 @@
-import js from "@eslint/js";
-import { globalIgnores } from "eslint/config";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
+import next from "@next/eslint-plugin-next";
 import globals from "globals";
-import pluginNext from "@next/eslint-plugin-next";
-import { config as baseConfig } from "./base.js";
+import { config as reactPreset } from "./react.js";
 
-/**
- * A custom ESLint configuration for libraries that use Next.js.
- *
- * @type {import("eslint").Linter.Config[]}
- * */
-export const nextJsConfig = [
-  ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-  {
-    ...pluginReact.configs.flat.recommended,
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-      },
-    },
-  },
-  {
-    plugins: {
-      "@next/next": pluginNext,
-    },
-    rules: {
-      ...pluginNext.configs.recommended.rules,
-      ...pluginNext.configs["core-web-vitals"].rules,
-    },
-  },
-  {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
-    settings: { react: { version: "detect" } },
-    rules: {
-      ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
+const ignoreConfig = {
+  ignores: ["**/.next/**", "**/node_modules/**", "**/dist/**"],
+};
 
-      // Strict React rules
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "react/prop-types": "off", // Not needed with TypeScript
+const nextConfig = {
+  files: ["**/*.{ts,tsx}"],
+
+  languageOptions: {
+    globals: {
+      ...globals.node,
+      ...globals.es2021,
     },
   },
-];
+
+  plugins: {
+    "@next/next": next,
+  },
+
+  rules: {
+    /* -------------------- Next.js -------------------- */
+
+    ...next.configs.recommended.rules,
+    ...next.configs["core-web-vitals"].rules,
+
+    // Next.js requires default exports for pages and API routes, still prefer named exports everywhere else
+    "import/no-default-export": "off",
+
+    // Next relies heavily on prop spreading
+    "react/jsx-props-no-spreading": "off",
+  },
+};
+
+export const config = [ignoreConfig, ...reactPreset, nextConfig];

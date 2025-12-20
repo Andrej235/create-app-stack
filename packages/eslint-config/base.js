@@ -1,51 +1,76 @@
 import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import turboPlugin from "eslint-plugin-turbo";
-import tseslint from "typescript-eslint";
-import onlyWarn from "eslint-plugin-only-warn";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import importPlugin from "eslint-plugin-import";
+import globals from "globals";
 
-/**
- * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config[]}
- * */
-export const config = [
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  {
-    plugins: {
-      turbo: turboPlugin,
-    },
-    rules: {
-      "turbo/no-undeclared-env-vars": "error",
-    },
-  },
-  {
-    rules: {
-      // Treat unused variables and params as errors
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
-        },
-      ],
-      "no-unused-vars": "off", // Turn off base rule as it can report incorrect errors
+const baseConfig = {
+  files: ["**/*.{ts,tsx}"],
 
-      // Additional strict rules
-      "no-console": ["error", { allow: ["warn", "error"] }],
-      "no-debugger": "error",
-      "no-alert": "error",
-      "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/explicit-module-boundary-types": "error",
-      "@typescript-eslint/no-non-null-assertion": "error",
-      "prefer-const": "error",
-      "no-var": "error",
+  languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      project: "./tsconfig.json",
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+    globals: {
+      ...globals.es2021,
+      ...globals.node,
     },
   },
-  {
-    ignores: ["dist/**"],
+
+  plugins: {
+    "@typescript-eslint": tseslint,
+    import: importPlugin,
   },
-];
+
+  rules: {
+    /* -------------------- TypeScript strictness -------------------- */
+
+    "@typescript-eslint/no-explicit-any": "error",
+
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
+
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-ignore": "allow-with-description",
+      },
+    ],
+
+    "@typescript-eslint/no-unsafe-call": "error",
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/no-unsafe-member-access": "error",
+    "@typescript-eslint/no-unsafe-return": "error",
+
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      { allowExpressions: true },
+    ],
+
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-misused-promises": "error",
+
+    /* -------------------- Imports -------------------- */
+
+    "import/order": "off",
+
+    "import/no-default-export": "error",
+
+    /* -------------------- General -------------------- */
+
+    "no-debugger": "error",
+    eqeqeq: "error",
+    curly: "error",
+  },
+};
+
+export const config = [js.configs.recommended, baseConfig];

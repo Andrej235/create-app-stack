@@ -1,7 +1,8 @@
+import "@repo/ui/globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Roboto, Roboto_Slab } from "next/font/google";
-import "@repo/ui/globals.css";
+import { ReactNode } from "react";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children: ReactNode;
+}>): ReactNode {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.variable} ${robotoSlab.variable} antialiased`}>
