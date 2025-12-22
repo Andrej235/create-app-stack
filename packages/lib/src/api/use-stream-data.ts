@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { TanStackQueryResponse } from "./types/query/query-response.js";
-import { SseEvent } from "./types/sse/sse-event.js";
+import { TanStackQueryResponse } from "./types/query/query-response";
+import { SseEvent } from "./types/sse/sse-event";
 
 type InputStream<T> = AsyncIterable<SseEvent<T>>;
 

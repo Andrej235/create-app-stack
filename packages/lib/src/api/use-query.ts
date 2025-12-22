@@ -1,12 +1,12 @@
-import { Exact } from "@/api/types/utility/exact.js";
+import { Exact } from "@/api/types/utility/exact";
 import { useQuery as useTanQuery } from "@tanstack/react-query";
-import { getSseStream } from "./get-sse-stream.js";
-import { sendApiRequest } from "./send-api-request.js";
-import { QueryCompatibleEndpoints } from "./types/query/query-compatible-endpoints.js";
-import { QueryOptions } from "./types/query/query-options.js";
-import { QueryResponse } from "./types/query/query-response.js";
-import { Request } from "./types/request/request.js";
-import { SseEndpoints } from "./types/spec/sse-endpoints.js";
+import { getSseStream } from "./get-sse-stream";
+import { sendApiRequest } from "./send-api-request";
+import { QueryCompatibleEndpoints } from "./types/query/query-compatible-endpoints";
+import { QueryOptions } from "./types/query/query-options";
+import { QueryResponse } from "./types/query/query-response";
+import { Request } from "./types/request/request";
+import { SseEndpoints } from "./types/spec/sse-endpoints";
 
 export function useQuery<
   const TRoute extends QueryCompatibleEndpoints,

@@ -1,8 +1,8 @@
-import { StreamConsumerPaths } from "@/api/types/sse/sse-response.js";
-import { Request } from "../request/request.js";
-import { RestResponse } from "../rest/rest-response.js";
-import { Endpoints, Methods } from "../spec/endpoints.js";
-import { StreamResponse } from "./stream-response.js";
+import { StreamConsumerPaths } from "@/api/types/sse/sse-response";
+import { Request } from "../request/request";
+import { RestResponse } from "../rest/rest-response";
+import { Endpoints, Methods } from "../spec/endpoints";
+import { StreamResponse } from "./stream-response";
 
 export type Response<
   TEndpoint extends Endpoints,

@@ -1,5 +1,5 @@
-import { Endpoints, Methods, Paths } from "./endpoints.js";
-import { IsCodeOk } from "../utility/is-code-ok.js";
+import { Endpoints, Methods, Paths } from "./endpoints";
+import { IsCodeOk } from "../utility/is-code-ok";
 
 type HasSseResponse<
   Endpoint extends Endpoints,

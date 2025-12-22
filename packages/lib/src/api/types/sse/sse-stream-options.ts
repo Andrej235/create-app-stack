@@ -1,5 +1,5 @@
-import { RequestParameters } from "../request/parameters.js";
-import { SseEndpoints } from "../spec/sse-endpoints.js";
+import { RequestParameters } from "../request/parameters";
+import { SseEndpoints } from "../spec/sse-endpoints";
 
 export type SseStreamOptions<Endpoint extends SseEndpoints> = {
   omitCredentials?: boolean;

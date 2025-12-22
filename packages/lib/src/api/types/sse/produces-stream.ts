@@ -1,4 +1,4 @@
-import { Endpoints, Methods, Paths } from "../spec/endpoints.js";
+import { Endpoints, Methods, Paths } from "../spec/endpoints";
 
 export type ProducesStream<
   Endpoint extends Endpoints,

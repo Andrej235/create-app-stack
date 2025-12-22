@@ -1,13 +1,13 @@
-import { StreamConsumerPaths } from "@/api/types/sse/sse-response.js";
+import { StreamConsumerPaths } from "@/api/types/sse/sse-response";
 import { useEffect, useState } from "react";
-import { sendApiRequest } from "./send-api-request.js";
-import { Request } from "./types/request/request.js";
-import { StreamResponse } from "./types/response/stream-response.js";
-import { Methods } from "./types/spec/endpoints.js";
-import { SseEndpoints } from "./types/spec/sse-endpoints.js";
-import { StreamProducerEndpoints } from "./types/spec/stream-producers.js";
-import { Exact } from "./types/utility/exact.js";
-import { useStreamData } from "./use-stream-data.js";
+import { sendApiRequest } from "./send-api-request";
+import { Request } from "./types/request/request";
+import { StreamResponse } from "./types/response/stream-response";
+import { Methods } from "./types/spec/endpoints";
+import { SseEndpoints } from "./types/spec/sse-endpoints";
+import { StreamProducerEndpoints } from "./types/spec/stream-producers";
+import { Exact } from "./types/utility/exact";
+import { useStreamData } from "./use-stream-data";
 
 type R<T extends StreamProducerEndpoints> = Request<T> & { followStream: true };
 

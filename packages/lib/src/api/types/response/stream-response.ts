@@ -1,6 +1,6 @@
-import { SseEndpoints } from "../spec/sse-endpoints.js";
-import { SseEvent } from "../sse/sse-event.js";
-import { SseResponse } from "../sse/sse-response.js";
+import { SseEndpoints } from "../spec/sse-endpoints";
+import { SseEvent } from "../sse/sse-event";
+import { SseResponse } from "../sse/sse-response";
 
 export type StreamResponse<Endpoint> = Endpoint extends unknown
   ? Endpoint extends SseEndpoints

@@ -1,5 +1,5 @@
-import { ParseSchemaProperty } from "../schema/property-parser.js";
-import { Paths } from "../spec/endpoints.js";
+import { ParseSchemaProperty } from "../schema/property-parser";
+import { Paths } from "../spec/endpoints";
 
 type ParseParameters<ParametersInfo> = ParametersInfo extends [
   infer First,

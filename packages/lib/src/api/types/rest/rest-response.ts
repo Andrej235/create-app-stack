@@ -1,6 +1,6 @@
-import { Endpoints, Methods, Paths } from "../spec/endpoints.js";
-import { ParseSchemaProperty } from "../schema/property-parser.js";
-import { IsCodeOk } from "../utility/is-code-ok.js";
+import { Endpoints, Methods, Paths } from "../spec/endpoints";
+import { ParseSchemaProperty } from "../schema/property-parser";
+import { IsCodeOk } from "../utility/is-code-ok";
 
 export type RestResponse<
   Endpoint extends Endpoints,

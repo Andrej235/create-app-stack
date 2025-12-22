@@ -1,12 +1,12 @@
-import { useAuthStore } from "@/stores/auth-store.js";
-import { apiResponseToToast } from "../utils/toast-promise.js";
-import { getSseStream } from "./get-sse-stream.js";
-import { parseUrl } from "./parse-url.js";
-import { Request } from "./types/request/request.js";
-import { Response } from "./types/response/response.js";
-import { Endpoints } from "./types/spec/endpoints.js";
-import { SseEndpoints } from "./types/spec/sse-endpoints.js";
-import { Exact } from "./types/utility/exact.js";
+import { useAuthStore } from "@/stores/auth-store";
+import { apiResponseToToast } from "../utils/toast-promise";
+import { getSseStream } from "./get-sse-stream";
+import { parseUrl } from "./parse-url";
+import { Request } from "./types/request/request";
+import { Response } from "./types/response/response";
+import { Endpoints } from "./types/spec/endpoints";
+import { SseEndpoints } from "./types/spec/sse-endpoints";
+import { Exact } from "./types/utility/exact";
 
 type Options = {
   omitCredentials?: boolean;

@@ -1,5 +1,5 @@
-import { baseApiUrl } from "./base-api-url.js";
-import { Endpoints } from "./types/spec/endpoints.js";
+import { baseApiUrl } from "./base-api-url";
+import { Endpoints } from "./types/spec/endpoints";
 
 export function parseUrl(
   route: Endpoints,

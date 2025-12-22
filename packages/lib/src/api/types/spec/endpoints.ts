@@ -1,4 +1,4 @@
-import { ApiSpec } from "./api-spec.js";
+import { ApiSpec } from "./api-spec";
 
 export type Paths = ApiSpec["paths"];
 export type Endpoints = keyof Paths;

@@ -55,6 +55,8 @@ const baseConfig = {
       { allowExpressions: true },
     ],
 
+    "@typescript-eslint/no-misused-promises": "off",
+
     /* -------------------- Imports -------------------- */
 
     "import/order": "off",

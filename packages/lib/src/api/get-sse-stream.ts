@@ -1,11 +1,11 @@
-import { useAuthStore } from "@/stores/auth-store.js";
+import { useAuthStore } from "@/stores/auth-store";
 import { EventSource } from "eventsource";
-import { parseUrl } from "./parse-url.js";
-import { StreamResponse } from "./types/response/stream-response.js";
-import { SseEndpoints } from "./types/spec/sse-endpoints.js";
-import { SseEvent } from "./types/sse/sse-event.js";
-import { SseResponse } from "./types/sse/sse-response.js";
-import { SseStreamOptions } from "./types/sse/sse-stream-options.js";
+import { parseUrl } from "./parse-url";
+import { StreamResponse } from "./types/response/stream-response";
+import { SseEndpoints } from "./types/spec/sse-endpoints";
+import { SseEvent } from "./types/sse/sse-event";
+import { SseResponse } from "./types/sse/sse-response";
+import { SseStreamOptions } from "./types/sse/sse-stream-options";
 
 export function getSseStream<Endpoint extends SseEndpoints>(
   url: Endpoint,

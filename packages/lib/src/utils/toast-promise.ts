@@ -1,4 +1,4 @@
-import { RestResponse } from "../api/types/rest/rest-response.js";
+import { RestResponse } from "../api/types/rest/rest-response";
 import { toast } from "sonner";
 
 export function apiResponseToToast(

@@ -1,4 +1,4 @@
-import type { RefToSchemaName, SchemaFromString } from "./schema-parser.js";
+import type { RefToSchemaName, SchemaFromString } from "./schema-parser";
 
 export type ParseSchemaProperty<T> = T extends { type: infer Type }
   ? Type extends "integer"

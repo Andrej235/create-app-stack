@@ -1,7 +1,7 @@
-import { ParseSchemaProperty } from "../schema/property-parser.js";
-import { Endpoints, Methods, Paths } from "../spec/endpoints.js";
-import { IsCodeOk } from "../utility/is-code-ok.js";
-import { SseEndpoints } from "../spec/sse-endpoints.js";
+import { ParseSchemaProperty } from "../schema/property-parser";
+import { Endpoints, Methods, Paths } from "../spec/endpoints";
+import { IsCodeOk } from "../utility/is-code-ok";
+import { SseEndpoints } from "../spec/sse-endpoints";
 
 export type SseResponse<Endpoint extends SseEndpoints> =
   Paths[Endpoint]["get"] extends {

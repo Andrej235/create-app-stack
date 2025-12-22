@@ -1,5 +1,5 @@
-import { ProducesStream } from "../sse/produces-stream.js";
-import { Endpoints, Methods } from "./endpoints.js";
+import { ProducesStream } from "../sse/produces-stream";
+import { Endpoints, Methods } from "./endpoints";
 
 type ExtractStreamProducers<Endpoint extends Endpoints> =
   Endpoint extends unknown

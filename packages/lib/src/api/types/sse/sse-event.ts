@@ -1,4 +1,4 @@
-import { SseError } from "./sse-error.js";
-import { SseMessage } from "./sse-message.js";
+import { SseError } from "./sse-error";
+import { SseMessage } from "./sse-message";
 
 export type SseEvent<T> = SseMessage<T> | SseError;

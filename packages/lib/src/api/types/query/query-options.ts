@@ -1,12 +1,12 @@
-import { sendApiRequest } from "@/api/send-api-request.js";
-import { Request } from "@/api/types/request/request.js";
+import { sendApiRequest } from "@/api/send-api-request";
+import { Request } from "@/api/types/request/request";
 import { OmitKeyof } from "@tanstack/query-core";
 import { UseQueryOptions } from "@tanstack/react-query";
-import { RequestParameters } from "../request/parameters.js";
-import { GetEndpoints } from "../spec/get-endpoints.js";
-import { SseEndpoints } from "../spec/sse-endpoints.js";
-import { StreamProducerEndpoints } from "../spec/stream-producers.js";
-import { QueryCompatibleEndpoints } from "./query-compatible-endpoints.js";
+import { RequestParameters } from "../request/parameters";
+import { GetEndpoints } from "../spec/get-endpoints";
+import { SseEndpoints } from "../spec/sse-endpoints";
+import { StreamProducerEndpoints } from "../spec/stream-producers";
+import { QueryCompatibleEndpoints } from "./query-compatible-endpoints";
 
 type TanstackOptions = OmitKeyof<
   UseQueryOptions<unknown, unknown, unknown, unknown[]>,

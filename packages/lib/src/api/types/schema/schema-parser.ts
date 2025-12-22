@@ -1,7 +1,7 @@
-import { AllSchemaInformation, SchemaNames } from "../spec/endpoints.js";
-import { LastElement } from "../utility/last-element.js";
-import { Split } from "../utility/split.js";
-import { IsPropertyNullable, ParseSchemaProperty } from "./property-parser.js";
+import { AllSchemaInformation, SchemaNames } from "../spec/endpoints";
+import { LastElement } from "../utility/last-element";
+import { Split } from "../utility/split";
+import { IsPropertyNullable, ParseSchemaProperty } from "./property-parser";
 
 export type Schema<SchemaName extends SchemaNames> = ParseSchema<
   SchemaInfo<SchemaName>
