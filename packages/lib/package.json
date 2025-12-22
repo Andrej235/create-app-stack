@@ -4,15 +4,22 @@
   "type": "module",
   "private": true,
   "exports": {
-    "./*": "./src/*.ts"
+    "./*": "./src/*.ts",
+    "./api/*": "./api/*.ts"
   },
   "scripts": {
     "lint": "eslint --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.12",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.4.0"
+    "eventsource": "^4.1.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.4.0",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

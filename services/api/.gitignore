@@ -289,4 +289,4 @@ __pycache__/
 *.xsd.cs
 
 secrets.json
-api-docs/
+docs/

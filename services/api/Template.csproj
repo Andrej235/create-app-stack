@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <OpenApiDocumentsDirectory>./api-docs/</OpenApiDocumentsDirectory>
+    <OpenApiDocumentsDirectory>./docs/</OpenApiDocumentsDirectory>
   </PropertyGroup>
   <PropertyGroup>
-    <OpenApiGenerateDocumentsOptions>--file-name open-api-documentation</OpenApiGenerateDocumentsOptions>
+    <OpenApiGenerateDocumentsOptions>--file-name open-api</OpenApiGenerateDocumentsOptions>
   </PropertyGroup>
 
   <ItemGroup>

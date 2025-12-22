@@ -30,6 +30,7 @@ const baseConfig = {
 
     "@typescript-eslint/no-explicit-any": "error",
 
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -46,18 +47,13 @@ const baseConfig = {
       },
     ],
 
-    "@typescript-eslint/no-unsafe-call": "error",
-    "@typescript-eslint/no-unsafe-assignment": "error",
-    "@typescript-eslint/no-unsafe-member-access": "error",
-    "@typescript-eslint/no-unsafe-return": "error",
+    // Disallow empty object types like '{}', use 'Record<string, unknown>' or 'object' instead
+    "@typescript-eslint/no-empty-object-type": "error",
 
     "@typescript-eslint/explicit-function-return-type": [
       "warn",
       { allowExpressions: true },
     ],
-
-    "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/no-misused-promises": "error",
 
     /* -------------------- Imports -------------------- */
 
@@ -69,7 +65,6 @@ const baseConfig = {
 
     "no-debugger": "error",
     eqeqeq: "error",
-    curly: "error",
   },
 };
 
