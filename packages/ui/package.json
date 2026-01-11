@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
