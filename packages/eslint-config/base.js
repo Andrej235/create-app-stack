@@ -50,10 +50,7 @@ const baseConfig = {
     // Disallow empty object types like '{}', use 'Record<string, unknown>' or 'object' instead
     "@typescript-eslint/no-empty-object-type": "error",
 
-    "@typescript-eslint/explicit-function-return-type": [
-      "warn",
-      { allowExpressions: true },
-    ],
+    
 
     "@typescript-eslint/no-misused-promises": "off",
 

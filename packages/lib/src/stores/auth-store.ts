@@ -2,16 +2,29 @@ import { create } from "zustand";
 
 type AuthStore = {
   initStorage: () => Promise<void>;
+  addAuthHeaders: (request: RequestInit) => Promise<RequestInit>;
+  
   logIn: (username: string, password: string) => Promise<boolean>;
   logOut: () => Promise<void>;
   getIsLoggedIn: () => Promise<boolean>;
-  addAuthHeaders: (request: RequestInit) => Promise<RequestInit>;
+
+  setup: (fns: Omit<AuthStore, "set">) => void;
 };
 
-export const useAuthStore = create<AuthStore>(() => ({
-  getIsLoggedIn: async () => false,
+export const useAuthStore = create<AuthStore>((set) => ({
   initStorage: async () => {},
+  addAuthHeaders: async (request: RequestInit) => request,
+  
   logIn: async () => false,
   logOut: async () => {},
-  addAuthHeaders: async (request: RequestInit) => request,
+  getIsLoggedIn: async () => false,
+
+  setup: (fns) => {
+    set({
+      ...fns,
+      setup: () => {
+        throw new Error("Setup can only be called once");
+      },
+    });
+  },
 }));
