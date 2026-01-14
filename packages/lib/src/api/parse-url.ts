@@ -1,11 +1,11 @@
-import { baseApiUrl } from "./base-api-url";
+import { getBaseApiUrl } from "./base-api-url";
 import { Endpoints } from "./types/spec/endpoints";
 
 export function parseUrl(
   route: Endpoints,
   parameters: Record<string, string> | null,
 ): URL {
-  const url = new URL(baseApiUrl.replace(/\/$/, "") + route);
+  const url = new URL(getBaseApiUrl() + route);
   if (!parameters) return url;
 
   // shallow copy, just so we can use delete

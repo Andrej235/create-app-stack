@@ -17,6 +17,7 @@ import {
 } from "./common/field";
 import { Input } from "./common/input";
 import { Link } from "./common/link";
+import { useAuthStore } from "@repo/lib/stores/auth-store";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -68,11 +69,14 @@ export function LoginForm({ className }: { className?: string }): JSX.Element {
     }
   };
 
+  const login = useAuthStore((x) => x.logIn);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setTouched({ email: true, password: true });
     validateField("email", formData.email);
     validateField("password", formData.password);
+
+    login(formData.email, formData.password);
   };
 
   return (

@@ -1,7 +1,7 @@
-import { StreamConsumerPaths } from "@/api/types/sse/sse-response";
 import { Request } from "../request/request";
 import { RestResponse } from "../rest/rest-response";
 import { Endpoints, Methods } from "../spec/endpoints";
+import { StreamConsumerPaths } from "../sse/sse-response";
 import { StreamResponse } from "./stream-response";
 
 export type Response<

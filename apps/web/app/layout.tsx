@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { Roboto, Roboto_Slab } from "next/font/google";
 import { ReactNode } from "react";
 import { QueryProvider } from "../components/query-provider";
+import { Setup } from "../components/setup";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -28,6 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.variable} ${robotoSlab.variable} antialiased`}>
+        <Setup />
+
         <QueryProvider>
           <ThemeProvider
             attribute="class"

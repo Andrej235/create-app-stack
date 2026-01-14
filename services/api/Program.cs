@@ -8,7 +8,12 @@ using Template.Data;
 using Template.Exceptions;
 using Template.Models;
 using Template.Services.ConnectionMapper;
+using Template.Services.Create;
+using Template.Services.Delete;
 using Template.Services.EmailSender;
+using Template.Services.ModelServices.TokenService;
+using Template.Services.ModelServices.UserService;
+using Template.Services.Read;
 using Template.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,7 +84,6 @@ builder
         options.SignIn.RequireConfirmedAccount = false;
     })
     .AddEntityFrameworkStores<DataContext>()
-    .AddApiEndpoints()
     .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -172,6 +176,17 @@ builder.Services.AddCors(options =>
 #endregion
 
 #region Model Services
+
+#region User
+builder.Services.AddScoped<IUserService, UserService>();
+#endregion
+
+#region Tokens
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICreateSingleService<RefreshToken>, CreateService<RefreshToken>>();
+builder.Services.AddScoped<IReadSingleService<RefreshToken>, ReadService<RefreshToken>>();
+builder.Services.AddScoped<IDeleteService<RefreshToken>, DeleteService<RefreshToken>>();
+#endregion
 
 #endregion
 

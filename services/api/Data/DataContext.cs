@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Template.Models;
 
 namespace Template.Data;
 
-public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext(options)
+public class DataContext(DbContextOptions<DataContext> options) : IdentityDbContext<User>(options)
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {

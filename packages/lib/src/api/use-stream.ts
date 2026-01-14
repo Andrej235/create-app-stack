@@ -1,4 +1,4 @@
-import { StreamConsumerPaths } from "@/api/types/sse/sse-response";
+import { StreamConsumerPaths } from "../api/types/sse/sse-response";
 import { useEffect, useState } from "react";
 import { sendApiRequest } from "./send-api-request";
 import { Request } from "./types/request/request";

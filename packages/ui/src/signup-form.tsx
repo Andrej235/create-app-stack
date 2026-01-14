@@ -17,6 +17,8 @@ import {
 } from "./common/card";
 import { Button } from "./common/button";
 import { Link } from "./common/link";
+import { sendApiRequest } from "@repo/lib/api/send-api-request";
+import { useNavigate } from "@repo/lib/hooks/use-navigate";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -41,7 +43,9 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
     confirmPassword: "",
   });
 
-  const validateField = (field: SignupFields, value: string) => {
+  const navigate = useNavigate();
+
+  const validateField = (field: SignupFields, value: string): boolean => {
     const newErrors = { ...errors };
 
     if (field === "name") {
@@ -88,6 +92,7 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
     }
 
     setErrors(newErrors);
+    return newErrors[field].length === 0;
   };
 
   const handleBlur = (field: SignupFields) => {
@@ -102,7 +107,7 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setTouched({
       name: true,
@@ -110,10 +115,37 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
       password: true,
       confirmPassword: true,
     });
-    validateField("name", formData.name);
-    validateField("email", formData.email);
-    validateField("password", formData.password);
-    validateField("confirmPassword", formData.confirmPassword);
+    let err = true;
+    err &&= validateField("name", formData.name);
+    err &&= validateField("email", formData.email);
+    err &&= validateField("password", formData.password);
+    err &&= validateField("confirmPassword", formData.confirmPassword);
+
+    if (!err) return;
+
+    const { isOk } = await sendApiRequest(
+      "/users/register",
+      {
+        method: "post",
+        payload: {
+          email: formData.email,
+          username: formData.name,
+          password: formData.password,
+        },
+      },
+      {
+        showToast: true,
+        toastOptions: {
+          success: "Account created successfully! You can now log in.",
+          loading: "Creating your account...",
+          error: (e) =>
+            e.message || "An error occurred while creating your account.",
+        },
+      },
+    );
+
+    if (!isOk) return;
+    navigate("/login");
   };
 
   return (

@@ -5,7 +5,6 @@ namespace Template.Dtos.Request.User;
 public class RegisterRequestDto
 {
     [Required]
-    [EmailAddress]
     public string Username { get; set; } = null!;
 
     [Required]

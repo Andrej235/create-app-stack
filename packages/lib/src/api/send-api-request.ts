@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "../stores/auth-store";
 import { apiResponseToToast } from "../utils/toast-promise";
 import { getSseStream } from "./get-sse-stream";
 import { parseUrl } from "./parse-url";

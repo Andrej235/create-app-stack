@@ -1,5 +1,5 @@
-import { sendApiRequest } from "@/api/send-api-request";
-import { Request } from "@/api/types/request/request";
+import { sendApiRequest } from "../../send-api-request";
+import { Request } from "../../types/request/request";
 import { OmitKeyof } from "@tanstack/query-core";
 import { UseQueryOptions } from "@tanstack/react-query";
 import { RequestParameters } from "../request/parameters";

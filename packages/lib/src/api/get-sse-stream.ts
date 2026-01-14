@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/stores/auth-store";
+import { useAuthStore } from "../stores/auth-store";
 import { EventSource } from "eventsource";
 import { parseUrl } from "./parse-url";
 import { StreamResponse } from "./types/response/stream-response";

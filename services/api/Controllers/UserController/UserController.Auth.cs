@@ -1,11 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Template.Dtos.Request.User;
+using Template.Dtos.Response.User;
+using Template.Utilities;
 
 namespace Template.Controllers.UserController;
 
 public partial class UserController
 {
+    [Authorize]
+    [HttpGet("check-auth")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public Task<OkResult> CheckAuth() => Task.FromResult(Ok());
+
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -19,32 +27,52 @@ public partial class UserController
         return Ok();
     }
 
+    [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<TokensResponseDto?>> Login([FromBody] LoginRequestDto request)
+    {
+        var result = await userService.Login(request);
+
+        if (result.IsFailed)
+            return BadRequest(new { Message = "Invalid username or password" });
+
+        return Ok(result.Value);
+    }
+
+    [HttpPost("refresh")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<TokensResponseDto>> Refresh(
+        [FromBody] RefreshTokensRequestDto request
+    )
+    {
+        var result = await userService.Refresh(request);
+
+        if (result.IsFailed)
+            return BadRequest(result.Errors[0]);
+
+        return Ok(result.Value);
+    }
+
     [Authorize]
-    [HttpPost("logout")]
+    [HttpPost("logout/cookie")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult> Logout()
+    public async Task<ActionResult> LogoutCookie()
     {
         await signInManager.SignOutAsync();
         return Ok();
     }
 
-    [HttpPost("login")]
+    [Authorize(Policy = AuthPolicies.JwtOnly)]
+    [HttpPost("logout/token")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult> Login([FromBody] LoginRequestDto request)
+    public async Task<ActionResult> LogoutToken([FromBody] LogoutRequestDto request)
     {
-        var result = await signInManager.PasswordSignInAsync(
-            request.Username,
-            request.Password,
-            true,
-            false
-        );
-
-        if (!result.Succeeded)
-            return Unauthorized(new { Message = "Invalid username or password." });
-
+        await userService.Logout(request);
         return Ok();
     }
 }

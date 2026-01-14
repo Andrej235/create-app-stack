@@ -1,4 +1,4 @@
-import { Exact } from "@/api/types/utility/exact";
+import { Exact } from "../api/types/utility/exact";
 import { useQuery as useTanQuery } from "@tanstack/react-query";
 import { getSseStream } from "./get-sse-stream";
 import { sendApiRequest } from "./send-api-request";
@@ -18,6 +18,7 @@ export function useQuery<
   return useTanQuery({
     queryFn: async () => {
       if (options && "stream" in options) {
+        // @ts-ignore this can cause type errors if no api endpoints are setup for sse
         return getSseStream(route as SseEndpoints, options);
       }
 

@@ -1,6 +1,6 @@
-import { ProducesStream } from "@/api/types/sse/produces-stream";
 import { RefToSchemaName, SchemaFromString } from "../schema/schema-parser";
 import { Endpoints, Methods, Paths } from "../spec/endpoints";
+import { ProducesStream } from "../sse/produces-stream";
 import { RequestParameters } from "./parameters";
 
 export type Request<Endpoint extends Endpoints> = RequestHelper<
