@@ -12,7 +12,7 @@ using Template.Data;
 namespace Template.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20260114153610_InitialMigration")]
+    [Migration("20260114160304_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

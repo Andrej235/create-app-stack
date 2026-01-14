@@ -31,8 +31,6 @@ export function Setup() {
       initStorage: async () => {},
 
       logIn: async (username, password) => {
-        console.log("first");
-
         const { isOk } = await sendApiRequest(
           "/users/login",
           {
