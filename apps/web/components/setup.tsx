@@ -2,12 +2,16 @@
 import { useSetBaseApiUrl } from "@repo/lib/api/base-api-url";
 import { sendApiRequest } from "@repo/lib/api/send-api-request";
 import { useAuthStore } from "@repo/lib/stores/auth-store";
-import { useEffect, useRef } from "react";
+import { useNavigationStore } from "@repo/lib/stores/navigation-store";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ComponentType, HTMLProps, useEffect, useRef } from "react";
 
 export function Setup() {
   const setupComplete = useRef(false);
   useSetBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API_URL!);
   const setupAuth = useAuthStore((x) => x.setup);
+  const setupNav = useNavigationStore((x) => x.setup);
 
   useEffect(() => {
     if (setupComplete.current) return;
@@ -73,7 +77,19 @@ export function Setup() {
         return isOk;
       },
     });
-  }, [setupAuth]);
+
+    setupNav({
+      Link: Link as ComponentType<HTMLProps<HTMLAnchorElement>>,
+      useNavigate: useNavigate,
+    });
+  }, [setupAuth, setupNav]);
 
   return null;
+}
+
+function useNavigate() {
+  const router = useRouter();
+  return (path: string) => {
+    router.push(path);
+  };
 }
