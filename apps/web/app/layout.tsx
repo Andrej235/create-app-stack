@@ -1,3 +1,4 @@
+import { Toaster } from "@repo/ui/common/sonner";
 import "@repo/ui/globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -40,6 +41,8 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+
+          <Toaster richColors />
         </QueryProvider>
       </body>
     </html>

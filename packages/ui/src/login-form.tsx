@@ -72,14 +72,14 @@ export function LoginForm({ className }: { className?: string }): JSX.Element {
 
   const login = useAuthStore((x) => x.logIn);
   const navigate = useNavigate();
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setTouched({ email: true, password: true });
     validateField("email", formData.email);
     validateField("password", formData.password);
 
-    login(formData.email, formData.password);
-    navigate("/");
+    const isLoggedIn = await login(formData.email, formData.password);
+    if (isLoggedIn) navigate("/");
   };
 
   return (

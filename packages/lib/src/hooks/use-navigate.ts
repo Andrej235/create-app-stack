@@ -1,5 +1,9 @@
-import { useNavigationStore } from "../stores/navigation-store";
+export let useNavigate: () => (to: string) => Promise<void> | void = () => {
+  throw new Error("NavigationStore is not set up yet");
+};
 
-export function useNavigate(): (path: string) => Promise<void> | void {
-  return useNavigationStore((s) => s.useNavigate)();
+export function setUseNavigate(
+  navigateFn: () => (to: string) => Promise<void> | void,
+) {
+  useNavigate = navigateFn;
 }

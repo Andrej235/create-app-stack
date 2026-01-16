@@ -1,17 +1,22 @@
 "use client";
 import { useSetBaseApiUrl } from "@repo/lib/api/base-api-url";
 import { sendApiRequest } from "@repo/lib/api/send-api-request";
+import { setUseNavigate } from "@repo/lib/hooks/use-navigate";
 import { useAuthStore } from "@repo/lib/stores/auth-store";
-import { useNavigationStore } from "@repo/lib/stores/navigation-store";
+import { setLinkComponent } from "@repo/ui/common/link";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ComponentType, HTMLProps, useEffect, useRef } from "react";
+import { AnchorHTMLAttributes, ComponentType, useEffect, useRef } from "react";
+
+setUseNavigate(useNavigate);
+setLinkComponent(
+  Link as ComponentType<AnchorHTMLAttributes<HTMLAnchorElement>>,
+);
 
 export function Setup() {
   const setupComplete = useRef(false);
   useSetBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API_URL!);
   const setupAuth = useAuthStore((x) => x.setup);
-  const setupNav = useNavigationStore((x) => x.setup);
 
   useEffect(() => {
     if (setupComplete.current) return;
@@ -77,19 +82,12 @@ export function Setup() {
         return isOk;
       },
     });
-
-    setupNav({
-      Link: Link as ComponentType<HTMLProps<HTMLAnchorElement>>,
-      useNavigate: useNavigate,
-    });
-  }, [setupAuth, setupNav]);
+  }, [setupAuth]);
 
   return null;
 }
 
 function useNavigate() {
   const router = useRouter();
-  return (path: string) => {
-    router.push(path);
-  };
+  return router.push;
 }
