@@ -56,7 +56,7 @@ public partial class UserController
         return Ok(result.Value);
     }
 
-    [Authorize]
+    [Authorize(Policy = AuthPolicies.CookieOnly)]
     [HttpPost("logout/cookie")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

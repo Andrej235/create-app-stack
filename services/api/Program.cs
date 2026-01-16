@@ -10,12 +10,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Resend;
 using Template.Data;
+using Template.Dtos.Response.User;
 using Template.Exceptions;
 using Template.Models;
 using Template.Services.ConnectionMapper;
 using Template.Services.Create;
 using Template.Services.Delete;
 using Template.Services.EmailSender;
+using Template.Services.Mapping.Response;
+using Template.Services.Mapping.Response.UserMappers;
 using Template.Services.ModelServices.TokenService;
 using Template.Services.ModelServices.UserService;
 using Template.Services.Read;
@@ -117,7 +120,7 @@ builder.Services.AddAuthorization(options =>
         }
     );
 
-    options.DefaultPolicy = options.GetPolicy(AuthPolicies.CookieOnly)!;
+    options.DefaultPolicy = options.GetPolicy(AuthPolicies.CookieOrJwt)!;
 });
 
 builder
@@ -264,6 +267,8 @@ builder.Services.AddCors(options =>
 
 #region User
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReadSingleService<User>, ReadService<User>>();
+builder.Services.AddScoped<IResponseMapper<User, UserResponseDto>, UserResponseMapper>();
 #endregion
 
 #region Tokens

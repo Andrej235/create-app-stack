@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Template.Models;
 using Template.Services.ModelServices.UserService;
-using Template.Services.Update;
 
 namespace Template.Controllers.UserController;
 

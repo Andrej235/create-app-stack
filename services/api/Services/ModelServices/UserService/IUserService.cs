@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using FluentResults;
 using Template.Dtos.Request.User;
 using Template.Dtos.Response.User;
@@ -16,4 +17,6 @@ public interface IUserService
 
     Task<Result> SendResetPasswordEmail(SendResetPasswordEmailRequestDto request);
     Task<Result> ResetPassword(ResetPasswordRequestDto request);
+
+    Task<Result<UserResponseDto>> Get(ClaimsPrincipal claim, CancellationToken cancellationToken);
 }
