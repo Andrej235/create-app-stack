@@ -138,6 +138,7 @@ builder
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
         options.SignIn.RequireConfirmedAccount = false;
         options.Tokens.EmailConfirmationTokenProvider = "ShortEmail";
+        options.Tokens.PasswordResetTokenProvider = "ShortEmail";
     })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders()

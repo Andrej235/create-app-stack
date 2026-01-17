@@ -1,10 +1,12 @@
 import { EmailVerification } from "@repo/ui/email-verification";
-import { JSX } from "react";
+import { JSX, Suspense } from "react";
 
 export default function VerifyEmailPage(): JSX.Element {
   return (
     <div className="grid h-screen w-screen place-items-center">
-      <EmailVerification />
+      <Suspense fallback={null}>
+        <EmailVerification />
+      </Suspense>
     </div>
   );
 }

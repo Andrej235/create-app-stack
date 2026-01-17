@@ -2,13 +2,15 @@
 import { useSetBaseApiUrl } from "@repo/lib/api/base-api-url";
 import { sendApiRequest } from "@repo/lib/api/send-api-request";
 import { setUseNavigate } from "@repo/lib/hooks/use-navigate";
+import { setUseSearchParams } from "@repo/lib/hooks/use-search-params";
 import { useAuthStore } from "@repo/lib/stores/auth-store";
 import { setLinkComponent } from "@repo/ui/common/link";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AnchorHTMLAttributes, ComponentType, useEffect, useRef } from "react";
 
 setUseNavigate(useNavigate);
+setUseSearchParams(useSearchParams);
 setLinkComponent(
   Link as ComponentType<AnchorHTMLAttributes<HTMLAnchorElement>>,
 );

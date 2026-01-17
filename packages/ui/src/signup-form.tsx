@@ -1,5 +1,16 @@
 "use client";
+import { sendApiRequest } from "@repo/lib/api/send-api-request";
+import { useNavigate } from "@repo/lib/hooks/use-navigate";
+import { EMAIL_REGEX } from "@repo/lib/utils/regex";
 import { FormEvent, JSX, useState } from "react";
+import { Button } from "./common/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./common/card";
 import {
   Field,
   FieldDescription,
@@ -8,19 +19,7 @@ import {
   FieldLabel,
 } from "./common/field";
 import { Input } from "./common/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./common/card";
-import { Button } from "./common/button";
 import { Link } from "./common/link";
-import { sendApiRequest } from "@repo/lib/api/send-api-request";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function SignupForm({ className }: { className?: string }): JSX.Element {
   type SignupFields = "name" | "email" | "password" | "confirmPassword";

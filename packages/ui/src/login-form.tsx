@@ -115,7 +115,7 @@ export function LoginForm({ className }: { className?: string }): JSX.Element {
               <div className="flex items-center">
                 <FieldLabel htmlFor="password">Password</FieldLabel>
                 <Link
-                  href="/forgot-password"
+                  href="/reset-password"
                   className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                 >
                   Forgot your password?
