@@ -1,5 +1,5 @@
 "use client";
-import { useSetBaseApiUrl } from "@repo/lib/api/base-api-url";
+import { setBaseApiUrl } from "@repo/lib/api/base-api-url";
 import { sendApiRequest } from "@repo/lib/api/send-api-request";
 import { setUseNavigate } from "@repo/lib/hooks/use-navigate";
 import { setUseSearchParams } from "@repo/lib/hooks/use-search-params";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnchorHTMLAttributes, ComponentType, useEffect, useRef } from "react";
 
+setBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API_URL!);
 setUseNavigate(useNavigate);
 setUseSearchParams(useSearchParams);
 setLinkComponent(
@@ -17,7 +18,6 @@ setLinkComponent(
 
 export function Setup() {
   const setupComplete = useRef(false);
-  useSetBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API_URL!);
   const setupAuth = useAuthStore((x) => x.setup);
 
   useEffect(() => {
