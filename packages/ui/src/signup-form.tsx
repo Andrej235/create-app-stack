@@ -1,5 +1,5 @@
 "use client";
-import { sendApiRequest } from "@repo/lib/api/send-api-request";
+import { Api } from "@repo/lib/api/api";
 import { useNavigate } from "@repo/lib/hooks/use-navigate";
 import { EMAIL_REGEX } from "@repo/lib/utils/regex";
 import { FormEvent, JSX, useState } from "react";
@@ -21,7 +21,13 @@ import {
 import { Input } from "./common/input";
 import { Link } from "./common/link";
 
-export function SignupForm({ className }: { className?: string }): JSX.Element {
+export function SignupForm({
+  className,
+  api,
+}: {
+  className?: string;
+  api: Api;
+}): JSX.Element {
   type SignupFields = "name" | "email" | "password" | "confirmPassword";
 
   const [touched, setTouched] = useState<
@@ -122,7 +128,7 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
 
     if (!err) return;
 
-    const { isOk } = await sendApiRequest(
+    const { isOk } = await api.sendRequest(
       "/users/register",
       {
         method: "post",
@@ -133,8 +139,7 @@ export function SignupForm({ className }: { className?: string }): JSX.Element {
         },
       },
       {
-        showToast: true,
-        toastOptions: {
+        toasts: {
           success: "Account created successfully! You can now log in.",
           loading: "Creating your account...",
           error: (e) =>

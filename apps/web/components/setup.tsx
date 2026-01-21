@@ -1,15 +1,11 @@
 "use client";
-import { setBaseApiUrl } from "@repo/lib/api/base-api-url";
-import { sendApiRequest } from "@repo/lib/api/send-api-request";
 import { setUseNavigate } from "@repo/lib/hooks/use-navigate";
 import { setUseSearchParams } from "@repo/lib/hooks/use-search-params";
-import { useAuthStore } from "@repo/lib/stores/auth-store";
 import { setLinkComponent } from "@repo/ui/common/link";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AnchorHTMLAttributes, ComponentType, useEffect, useRef } from "react";
+import { AnchorHTMLAttributes, ComponentType } from "react";
 
-setBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API_URL!);
 setUseNavigate(useNavigate);
 setUseSearchParams(useSearchParams);
 setLinkComponent(
@@ -17,75 +13,6 @@ setLinkComponent(
 );
 
 export function Setup() {
-  const setupComplete = useRef(false);
-  const setupAuth = useAuthStore((x) => x.setup);
-
-  useEffect(() => {
-    if (setupComplete.current) return;
-    setupComplete.current = true;
-
-    setupAuth({
-      addAuthHeaders: async (headers) => {
-        headers.credentials = "include";
-        return headers;
-      },
-
-      getIsLoggedIn: async () => {
-        const { isOk } = await sendApiRequest("/users/check-auth", {
-          method: "get",
-        });
-
-        return isOk;
-      },
-
-      // no op since we use cookie-based auth
-      initStorage: async () => {},
-
-      logIn: async (username, password) => {
-        const { isOk } = await sendApiRequest(
-          "/users/login",
-          {
-            method: "post",
-            payload: {
-              username,
-              password,
-              useCookies: true,
-            },
-          },
-          {
-            showToast: true,
-            toastOptions: {
-              success: "Logged in successfully",
-              loading: "Logging in...",
-              error: (e) => e.message || "Failed to log in",
-            },
-          },
-        );
-
-        return isOk;
-      },
-
-      logOut: async () => {
-        const { isOk } = await sendApiRequest(
-          "/users/logout/cookie",
-          {
-            method: "post",
-          },
-          {
-            showToast: true,
-            toastOptions: {
-              success: "Logged out successfully",
-              loading: "Logging out...",
-              error: (e) => e.message || "Failed to log out",
-            },
-          },
-        );
-
-        return isOk;
-      },
-    });
-  }, [setupAuth]);
-
   return null;
 }
 

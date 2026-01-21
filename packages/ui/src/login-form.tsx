@@ -1,4 +1,6 @@
 "use client";
+import { Api } from "@repo/lib/api/api";
+import { useNavigate } from "@repo/lib/hooks/use-navigate";
 import { FormEvent, JSX, useState } from "react";
 import { Button } from "./common/button";
 import {
@@ -17,12 +19,16 @@ import {
 } from "./common/field";
 import { Input } from "./common/input";
 import { Link } from "./common/link";
-import { useAuthStore } from "@repo/lib/stores/auth-store";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function LoginForm({ className }: { className?: string }): JSX.Element {
+export function LoginForm({
+  className,
+  api,
+}: {
+  className?: string;
+  api: Api;
+}): JSX.Element {
   type LoginFields = "email" | "password";
 
   const [touched, setTouched] = useState<Partial<Record<LoginFields, boolean>>>(
@@ -70,7 +76,6 @@ export function LoginForm({ className }: { className?: string }): JSX.Element {
     }
   };
 
-  const login = useAuthStore((x) => x.logIn);
   const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -78,7 +83,7 @@ export function LoginForm({ className }: { className?: string }): JSX.Element {
     validateField("email", formData.email);
     validateField("password", formData.password);
 
-    const isLoggedIn = await login(formData.email, formData.password);
+    const isLoggedIn = await api.logIn(formData.email, formData.password);
     if (isLoggedIn) navigate("/");
   };
 

@@ -1,4 +1,12 @@
 "use client";
+import { Api } from "@repo/lib/api/api";
+import { useNavigate } from "@repo/lib/hooks/use-navigate";
+import { useUserStore } from "@repo/lib/stores/user-store";
+import { useQueryClient } from "@tanstack/react-query";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { Mail } from "lucide-react";
+import { useRef, useState } from "react";
+import { Button } from "./common/button";
 import {
   Card,
   CardContent,
@@ -13,23 +21,13 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "./common/input-otp";
-import { useQueryClient } from "@tanstack/react-query";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { Mail } from "lucide-react";
-import { useRef, useState } from "react";
 import { CountdownTimer } from "./countdown-timer";
-import { useAuthStore } from "@repo/lib/stores/auth-store";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
-import { sendApiRequest } from "@repo/lib/api/send-api-request";
-import { useUserStore } from "@repo/lib/stores/user-store";
-import { Button } from "./common/button";
 
-export function EmailVerification() {
+export function EmailVerification({ api }: { api: Api }) {
   const user = useUserStore((x) => x.user);
   const [otp, setOtp] = useState("");
 
   const navigate = useNavigate();
-  const logOut = useAuthStore((x) => x.logOut);
   const queryClient = useQueryClient();
 
   const [isCountdownActive, setIsCountdownActive] = useState(false);
@@ -39,7 +37,7 @@ export function EmailVerification() {
     if (sentVerification.current) return;
     sentVerification.current = true;
 
-    const response = await sendApiRequest(
+    const response = await api.sendRequest(
       "/users/resend-confirmation-email",
       {
         method: "post",
@@ -48,8 +46,7 @@ export function EmailVerification() {
         },
       },
       {
-        showToast: true,
-        toastOptions: {
+        toasts: {
           loading: "Sending verification email, please wait...",
           success: "Verification email resent successfully!",
           error: (x) => x.message || "Failed to resend email",
@@ -70,7 +67,7 @@ export function EmailVerification() {
     if (!user) return;
     setOtp("");
 
-    const { isOk } = await sendApiRequest(
+    const { isOk } = await api.sendRequest(
       "/users/confirm-email",
       {
         method: "post",
@@ -80,8 +77,7 @@ export function EmailVerification() {
         },
       },
       {
-        showToast: true,
-        toastOptions: {
+        toasts: {
           loading: "Verifying email, please wait...",
           success: "Email verified successfully!",
           error: (x) => x.message || "Failed to verify email",
@@ -181,7 +177,7 @@ export function EmailVerification() {
             variant="link"
             className="px-2 text-sm"
             onClick={async () => {
-              await logOut();
+              await api.logOut();
 
               // Force revalidation, without this app.tsx would just redirect the user to the dashboard
               await queryClient.resetQueries({

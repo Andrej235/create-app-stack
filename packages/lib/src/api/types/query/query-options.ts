@@ -1,7 +1,7 @@
-import { sendApiRequest } from "../../send-api-request";
-import { Request } from "../../types/request/request";
 import { OmitKeyof } from "@tanstack/query-core";
 import { UseQueryOptions } from "@tanstack/react-query";
+import { SendRequestOptions } from "../../send-api-request";
+import { Request } from "../../types/request/request";
 import { RequestParameters } from "../request/parameters";
 import { GetEndpoints } from "../spec/get-endpoints";
 import { SseEndpoints } from "../spec/sse-endpoints";
@@ -18,7 +18,7 @@ export type QueryOptions<Route extends QueryCompatibleEndpoints> =
     GetOptions<Route> &
     SseOptions<Route> &
     StreamProducerOptions<Route> &
-    Parameters<typeof sendApiRequest>[2];
+    Omit<SendRequestOptions, "addAuthHeaders">;
 
 type GetOptions<Route> = Route extends GetEndpoints
   ? RequestParameters<Route, "get">

@@ -1,5 +1,5 @@
 "use client";
-import { sendApiRequest } from "@repo/lib/api/send-api-request";
+import { Api } from "@repo/lib/api/api";
 import { useNavigate } from "@repo/lib/hooks/use-navigate";
 import { useQueryParams } from "@repo/lib/hooks/use-search-params";
 import { EMAIL_REGEX } from "@repo/lib/utils/regex";
@@ -26,7 +26,7 @@ import {
 } from "./common/input-otp";
 import { CountdownTimer } from "./countdown-timer";
 
-export function ResetPassword() {
+export function ResetPassword({ api }: { api: Api }) {
   // use location, get query params token and email, if no token show otp, if no email show a form asking for email
   const params = useQueryParams();
   const tokenParam = params.get("token");
@@ -53,7 +53,7 @@ export function ResetPassword() {
     if (sentVerification.current || !email) return;
     sentVerification.current = true;
 
-    const response = await sendApiRequest(
+    const response = await api.sendRequest(
       "/users/send-reset-password-email",
       {
         method: "post",
@@ -62,8 +62,7 @@ export function ResetPassword() {
         },
       },
       {
-        showToast: true,
-        toastOptions: {
+        toasts: {
           loading: "Sending reset email, please wait...",
           success: "Reset email sent successfully!",
           error: (x) => x.message || "Failed to resend email",
@@ -165,7 +164,7 @@ export function ResetPassword() {
       return;
     }
 
-    const { isOk } = await sendApiRequest(
+    const { isOk } = await api.sendRequest(
       "/users/reset-password",
       {
         method: "patch",
@@ -176,8 +175,7 @@ export function ResetPassword() {
         },
       },
       {
-        showToast: true,
-        toastOptions: {
+        toasts: {
           success: "Password changed successfully! You can now log in.",
           loading: "Changing your password...",
           error: (e) =>

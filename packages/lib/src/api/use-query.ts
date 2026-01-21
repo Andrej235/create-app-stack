@@ -1,7 +1,7 @@
-import { Exact } from "../api/types/utility/exact";
 import { useQuery as useTanQuery } from "@tanstack/react-query";
+import { Exact } from "../api/types/utility/exact";
+import { Api } from "./api";
 import { getSseStream } from "./get-sse-stream";
-import { sendApiRequest } from "./send-api-request";
 import { QueryCompatibleEndpoints } from "./types/query/query-compatible-endpoints";
 import { QueryOptions } from "./types/query/query-options";
 import { QueryResponse } from "./types/query/query-response";
@@ -12,6 +12,7 @@ export function useQuery<
   const TRoute extends QueryCompatibleEndpoints,
   const TOptions extends QueryOptions<TRoute>,
 >(
+  api: Api,
   route: TRoute,
   options?: Exact<TOptions, QueryOptions<TRoute>>,
 ): QueryResponse<TRoute, TOptions> {
@@ -19,10 +20,10 @@ export function useQuery<
     queryFn: async () => {
       if (options && "stream" in options) {
         // @ts-ignore this can cause type errors if no api endpoints are setup for sse
-        return getSseStream(route as SseEndpoints, options);
+        return getSseStream(api, route as SseEndpoints, options);
       }
 
-      const x = await sendApiRequest(
+      const x = await api.sendRequest(
         route,
         options && "method" in options
           ? (options as unknown as Exact<Request<TRoute>, Request<TRoute>>)
@@ -33,11 +34,8 @@ export function useQuery<
         {
           abortSignal: options?.abortSignal,
           omitCredentials: options?.omitCredentials,
-          showToast: options?.showToast as true,
-          toastOptions:
-            options && "toastOptions" in options
-              ? options.toastOptions
-              : undefined,
+          toasts: options?.toasts,
+          modifyRequest: options?.modifyRequest,
         },
       );
 

@@ -48,6 +48,7 @@ function Button({
   const Comp = asChild ? Slot : "button";
 
   return (
+    // @ts-expect-error TS isn't happy with generic props on Slot
     <Comp
       data-slot="button"
       data-variant={variant}

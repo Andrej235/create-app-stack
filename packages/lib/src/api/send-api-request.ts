@@ -1,5 +1,5 @@
-import { useAuthStore } from "../stores/auth-store";
 import { apiResponseToToast } from "../utils/toast-promise";
+import { Api } from "./api";
 import { getSseStream } from "./get-sse-stream";
 import { parseUrl } from "./parse-url";
 import { Request } from "./types/request/request";
@@ -8,27 +8,26 @@ import { Endpoints } from "./types/spec/endpoints";
 import { SseEndpoints } from "./types/spec/sse-endpoints";
 import { Exact } from "./types/utility/exact";
 
-type Options = {
+export type SendRequestOptions = {
   omitCredentials?: boolean;
   abortSignal?: AbortSignal;
-  modifyRequest?: (request: RequestInit) => RequestInit;
-} & (
-  | {
-      showToast: true;
-      toastOptions?: Parameters<typeof apiResponseToToast>[1];
-    }
-  | {
-      showToast?: false;
-    }
-);
+  modifyRequest?: (request: RequestInit) => RequestInit | Promise<RequestInit>;
+  addAuthHeaders: (request: RequestInit) => RequestInit | Promise<RequestInit>;
+  toasts?: {
+    loading: string;
+    success: string;
+    error: (error: Error) => string;
+  };
+};
 
 export function sendApiRequest<
   const TEndpoint extends Endpoints,
   const TRequest extends Request<TEndpoint>,
 >(
+  api: Api,
   endpoint: TEndpoint,
   request: Exact<TRequest, Request<TEndpoint>>,
-  options: Options = {},
+  options: SendRequestOptions,
 ): Promise<Response<TEndpoint, TRequest>> & {
   cancel: () => void;
 } {
@@ -41,6 +40,7 @@ export function sendApiRequest<
   }
 
   const response: ReturnType<typeof sendApiRequest> = innerSendApiRequest(
+    api,
     endpoint,
     request,
     {
@@ -57,11 +57,13 @@ async function innerSendApiRequest<
   TEndpoint extends Endpoints,
   TRequest extends Request<TEndpoint>,
 >(
+  api: Api,
   endpoint: TEndpoint,
   request: Exact<TRequest, Request<TEndpoint>>,
-  options: Options = {},
+  options: SendRequestOptions,
 ): Promise<Response<TEndpoint, TRequest>> {
   const url = parseUrl(
+    api.baseUrl,
     endpoint,
     "parameters" in request && typeof request.parameters === "object"
       ? (request.parameters as Record<string, string>)
@@ -79,10 +81,10 @@ async function innerSendApiRequest<
     },
   };
 
-  if (!options.omitCredentials)
-    await useAuthStore.getState().addAuthHeaders(requestInit);
+  if (!options.omitCredentials) await options.addAuthHeaders(requestInit);
 
-  if (options.modifyRequest) requestInit = options.modifyRequest(requestInit);
+  if (options.modifyRequest)
+    requestInit = await options.modifyRequest(requestInit);
 
   const responsePromise = (async () => {
     const response = await fetch(url, requestInit);
@@ -107,6 +109,7 @@ async function innerSendApiRequest<
 
       if (location) {
         (mappedResponse as Record<string, unknown>).stream = getSseStream(
+          api,
           location as SseEndpoints,
           { ...options, parameters: null! },
         );
@@ -116,8 +119,7 @@ async function innerSendApiRequest<
     return mappedResponse;
   })();
 
-  if (options.showToast)
-    apiResponseToToast(responsePromise, options.toastOptions || {});
+  if (options.toasts) apiResponseToToast(responsePromise, options.toasts);
 
   return await responsePromise;
 }

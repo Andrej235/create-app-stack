@@ -1,5 +1,5 @@
-import { useAuthStore } from "../stores/auth-store";
 import { EventSource } from "eventsource";
+import { Api } from "./api";
 import { parseUrl } from "./parse-url";
 import { StreamResponse } from "./types/response/stream-response";
 import { SseEndpoints } from "./types/spec/sse-endpoints";
@@ -8,6 +8,7 @@ import { SseResponse } from "./types/sse/sse-response";
 import { SseStreamOptions } from "./types/sse/sse-stream-options";
 
 export function getSseStream<Endpoint extends SseEndpoints>(
+  api: Api,
   url: Endpoint,
   options: SseStreamOptions<Endpoint>,
 ): StreamResponse<Endpoint> {
@@ -31,6 +32,7 @@ export function getSseStream<Endpoint extends SseEndpoints>(
 
       eventSource = new EventSource(
         parseUrl(
+          api.baseUrl,
           url,
           "parameters" in options
             ? (options.parameters as Record<string, string>)
@@ -47,7 +49,7 @@ export function getSseStream<Endpoint extends SseEndpoints>(
             };
 
             if (!options.omitCredentials)
-              request = await useAuthStore.getState().addAuthHeaders(request);
+              request = await api.addAuthHeaders(request);
 
             return await fetch(input, request);
           },

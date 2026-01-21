@@ -1,6 +1,6 @@
-import { StreamConsumerPaths } from "../api/types/sse/sse-response";
 import { useEffect, useState } from "react";
-import { sendApiRequest } from "./send-api-request";
+import { StreamConsumerPaths } from "../api/types/sse/sse-response";
+import { Api } from "./api";
 import { Request } from "./types/request/request";
 import { StreamResponse } from "./types/response/stream-response";
 import { Methods } from "./types/spec/endpoints";
@@ -34,6 +34,7 @@ export function useStream<
   TRoute extends StreamProducerEndpoints,
   const TRequest extends R<TRoute>,
 >(
+  api: Api,
   endpoint: TRoute,
   request: Exact<TRequest, R<TRoute>>,
   key: unknown[],
@@ -53,7 +54,7 @@ export function useStream<
         return;
       }
 
-      const x = sendApiRequest(
+      const x = api.sendRequest(
         endpoint,
         request as Exact<R<TRoute>, R<TRoute>>,
         {},

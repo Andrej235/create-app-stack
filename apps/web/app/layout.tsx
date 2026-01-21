@@ -6,6 +6,8 @@ import { Roboto, Roboto_Slab } from "next/font/google";
 import { ReactNode } from "react";
 import { QueryProvider } from "../components/query-provider";
 import { Setup } from "../components/setup";
+import "../lib/api.client";
+import "../lib/api.server";
 
 const roboto = Roboto({
   variable: "--font-roboto",
