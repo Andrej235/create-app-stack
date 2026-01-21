@@ -1,6 +1,7 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
+import { LinkComp } from "@repo/lib/types/link-comp";
+import { Navigate } from "@repo/lib/types/navigate";
 import { EMAIL_REGEX } from "@repo/lib/utils/regex";
 import { FormEvent, JSX, useState } from "react";
 import { Button } from "./common/button";
@@ -19,14 +20,17 @@ import {
   FieldLabel,
 } from "./common/field";
 import { Input } from "./common/input";
-import { Link } from "./common/link";
 
 export function SignupForm({
   className,
   api,
+  navigate,
+  LinkComp: Link,
 }: {
   className?: string;
   api: Api;
+  navigate: Navigate;
+  LinkComp: LinkComp;
 }): JSX.Element {
   type SignupFields = "name" | "email" | "password" | "confirmPassword";
 
@@ -47,8 +51,6 @@ export function SignupForm({
     password: "",
     confirmPassword: "",
   });
-
-  const navigate = useNavigate();
 
   const validateField = (field: SignupFields, value: string): boolean => {
     const newErrors = { ...errors };

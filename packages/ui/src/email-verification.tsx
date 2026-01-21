@@ -1,7 +1,7 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
 import { useUserStore } from "@repo/lib/stores/user-store";
+import { Navigate } from "@repo/lib/types/navigate";
 import { useQueryClient } from "@tanstack/react-query";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { Mail } from "lucide-react";
@@ -23,11 +23,16 @@ import {
 } from "./common/input-otp";
 import { CountdownTimer } from "./countdown-timer";
 
-export function EmailVerification({ api }: { api: Api }) {
+export function EmailVerification({
+  api,
+  navigate,
+}: {
+  api: Api;
+  navigate: Navigate;
+}) {
   const user = useUserStore((x) => x.user);
   const [otp, setOtp] = useState("");
 
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [isCountdownActive, setIsCountdownActive] = useState(false);

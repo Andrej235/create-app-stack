@@ -1,7 +1,6 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
-import { useQueryParams } from "@repo/lib/hooks/use-search-params";
+import { Navigate } from "@repo/lib/types/navigate";
 import { EMAIL_REGEX } from "@repo/lib/utils/regex";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { RotateCcw } from "lucide-react";
@@ -26,9 +25,15 @@ import {
 } from "./common/input-otp";
 import { CountdownTimer } from "./countdown-timer";
 
-export function ResetPassword({ api }: { api: Api }) {
-  // use location, get query params token and email, if no token show otp, if no email show a form asking for email
-  const params = useQueryParams();
+export function ResetPassword({
+  api,
+  navigate,
+  params,
+}: {
+  api: Api;
+  navigate: Navigate;
+  params: URLSearchParams;
+}) {
   const tokenParam = params.get("token");
   const emailParam = params.get("email");
 
@@ -40,7 +45,7 @@ export function ResetPassword({ api }: { api: Api }) {
   const [otp, setOtp] = useState(tokenParam ?? "");
 
   const [currentStep, setCurrentStep] = useState<"email" | "code" | "password">(
-    !email ? "email" : !otp ? "code" : "password",
+    !email ? "email" : otp.length !== 6 ? "code" : "password",
   );
 
   async function handleSubmitCode() {
@@ -95,8 +100,6 @@ export function ResetPassword({ api }: { api: Api }) {
     password: "",
     confirmPassword: "",
   });
-
-  const navigate = useNavigate();
 
   const validateField = (field: PasswordFields, value: string): boolean => {
     const newErrors = { ...errors };

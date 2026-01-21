@@ -1,6 +1,7 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
-import { useNavigate } from "@repo/lib/hooks/use-navigate";
+import { LinkComp } from "@repo/lib/types/link-comp";
+import { Navigate } from "@repo/lib/types/navigate";
 import { FormEvent, JSX, useState } from "react";
 import { Button } from "./common/button";
 import {
@@ -18,16 +19,19 @@ import {
   FieldLabel,
 } from "./common/field";
 import { Input } from "./common/input";
-import { Link } from "./common/link";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function LoginForm({
   className,
   api,
+  navigate,
+  LinkComp: Link,
 }: {
   className?: string;
   api: Api;
+  navigate: Navigate;
+  LinkComp: LinkComp;
 }): JSX.Element {
   type LoginFields = "email" | "password";
 
@@ -76,7 +80,6 @@ export function LoginForm({
     }
   };
 
-  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setTouched({ email: true, password: true });
