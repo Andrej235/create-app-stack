@@ -3,7 +3,7 @@ import { Api } from "@repo/lib/api/api";
 import { Navigate } from "@repo/lib/types/navigate";
 import { EMAIL_REGEX } from "@repo/lib/utils/regex";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import { RotateCcw } from "lucide-react";
+import { ArrowLeft, RotateCcw } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./common/button";
@@ -193,11 +193,12 @@ export function ResetPassword({
 
   if (currentStep === "email") {
     return (
-      <Card className="aspect-square w-full max-w-lg justify-center">
+      <Card className="relative aspect-square w-full max-w-[min(95vw,32rem)] justify-center">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-primary/25">
             <RotateCcw className="size-8 text-primary" />
           </div>
+
           <CardTitle className="text-2xl font-bold">
             Reset your password
           </CardTitle>
@@ -205,6 +206,15 @@ export function ResetPassword({
           <CardDescription className="text-base">
             Enter your email address to receive a password reset link.
           </CardDescription>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate("..")}
+            className="absolute top-2 left-2"
+          >
+            <ArrowLeft />
+          </Button>
         </CardHeader>
 
         <CardContent className="text-center">
