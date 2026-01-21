@@ -16,7 +16,7 @@ export type RestResponse<
             message: string;
           } & Record<string, unknown>)
         | null;
-      response: ParseResponse<Responses[IsCodeOk<keyof Responses>]> | null;
+      data: ParseResponse<Responses[IsCodeOk<keyof Responses>]> | null;
     }
   : null;
 

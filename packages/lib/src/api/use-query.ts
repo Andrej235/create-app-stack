@@ -47,7 +47,7 @@ export function useQuery<
         throw new Error(x?.error?.message ?? "Something went wrong");
       }
 
-      return x.response;
+      return x.data;
     },
     refetchOnWindowFocus: false,
     ...options,

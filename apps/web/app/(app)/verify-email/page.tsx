@@ -1,15 +1,13 @@
-"use client";
-import { EmailVerification } from "@repo/ui/email-verification";
-import { useRouter } from "next/navigation";
 import { JSX } from "react";
-import { api } from "../../../lib/api.client";
+import { EmailVerification } from "../../../components/email-verification";
+import { getUser } from "../../../lib/get-user";
 
-export default function VerifyEmailPage(): JSX.Element {
-  const router = useRouter();
+export default async function VerifyEmailPage(): Promise<JSX.Element> {
+  const user = await getUser();
 
   return (
     <div className="grid h-screen w-screen place-items-center">
-      <EmailVerification api={api} navigate={router.push} />
+      <EmailVerification user={user!} />
     </div>
   );
 }

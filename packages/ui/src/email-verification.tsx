@@ -1,6 +1,6 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
-import { useUserStore } from "@repo/lib/stores/user-store";
+import { Schema } from "@repo/lib/api/types/schema/schema-parser";
 import { Navigate } from "@repo/lib/types/navigate";
 import { useQueryClient } from "@tanstack/react-query";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
@@ -26,11 +26,12 @@ import { CountdownTimer } from "./countdown-timer";
 export function EmailVerification({
   api,
   navigate,
+  user,
 }: {
   api: Api;
   navigate: Navigate;
+  user: Schema<"UserResponseDto">;
 }) {
-  const user = useUserStore((x) => x.user);
   const [otp, setOtp] = useState("");
 
   const queryClient = useQueryClient();

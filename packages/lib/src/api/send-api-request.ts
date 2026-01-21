@@ -101,7 +101,7 @@ async function innerSendApiRequest<
       code,
       isOk,
       error: isOk ? null : data,
-      response: isOk ? data : null,
+      data: isOk ? data : null,
     } as unknown as Response<TEndpoint, TRequest>;
 
     if ("followStream" in request && request.followStream) {
