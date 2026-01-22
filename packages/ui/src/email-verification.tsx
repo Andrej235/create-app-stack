@@ -22,6 +22,7 @@ import {
   InputOTPSlot,
 } from "./common/input-otp";
 import { CountdownTimer } from "./countdown-timer";
+import { toast } from "sonner";
 
 export function EmailVerification({
   api,
@@ -96,7 +97,7 @@ export function EmailVerification({
   }
 
   return (
-    <Card className="aspect-square w-full max-w-lg justify-center">
+    <Card className="w-full max-w-[min(95vw,32rem)]">
       <CardHeader className="text-center">
         <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-primary/25">
           <Mail className="size-8 text-primary" />
@@ -146,7 +147,7 @@ export function EmailVerification({
       </CardContent>
 
       <CardFooter className="flex flex-col space-y-4">
-        <div className="grid w-full gap-x-2 lg:grid-cols-2">
+        <div className="grid w-full gap-2 md:grid-cols-2">
           <Button
             className="w-full"
             disabled={otp.length !== 6}
@@ -183,7 +184,8 @@ export function EmailVerification({
             variant="link"
             className="px-2 text-sm"
             onClick={async () => {
-              await api.logOut();
+              const a = await api.logOut();
+              toast.info("You have been logged out. " + a);
 
               // Force revalidation, without this app.tsx would just redirect the user to the dashboard
               await queryClient.resetQueries({

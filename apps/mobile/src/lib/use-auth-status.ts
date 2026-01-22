@@ -1,10 +1,13 @@
-import { useQuery } from "@repo/lib/api/use-query";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "./api";
 
-export function useLoggedIn() {
-  const query = useQuery(api, "/users/check-auth", {
-    queryKey: ["user", "check-auth"],
+export function useAuthStatus() {
+  const query = useQuery({
+    queryKey: ["user", "me", "check-auth"],
     refetchOnWindowFocus: false,
+    queryFn: async () => {
+      return await api.isLoggedIn();
+    },
   });
 
   return query;

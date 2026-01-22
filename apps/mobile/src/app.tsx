@@ -7,12 +7,14 @@ const queryClient = new QueryClient();
 
 export function App(): JSX.Element {
   return (
-    <div className="grid h-screen place-items-center">
-      <QueryClientProvider client={queryClient}>
-        <Outlet />
-      </QueryClientProvider>
-      
+    <>
+      <div className="grid h-screen w-screen place-items-center">
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
+      </div>
+
       <Toaster richColors />
-    </div>
+    </>
   );
 }

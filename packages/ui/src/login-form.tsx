@@ -1,7 +1,6 @@
 "use client";
 import { Api } from "@repo/lib/api/api";
 import { LinkComp } from "@repo/lib/types/link-comp";
-import { Navigate } from "@repo/lib/types/navigate";
 import { FormEvent, JSX, useState } from "react";
 import { Button } from "./common/button";
 import {
@@ -25,12 +24,12 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function LoginForm({
   className,
   api,
-  navigate,
+  onLogin,
   LinkComp: Link,
 }: {
   className?: string;
   api: Api;
-  navigate: Navigate;
+  onLogin: () => void;
   LinkComp: LinkComp;
 }): JSX.Element {
   type LoginFields = "email" | "password";
@@ -87,7 +86,7 @@ export function LoginForm({
     validateField("password", formData.password);
 
     const isLoggedIn = await api.logIn(formData.email, formData.password);
-    if (isLoggedIn) navigate("/");
+    if (isLoggedIn) onLogin();
   };
 
   return (

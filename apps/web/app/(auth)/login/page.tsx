@@ -13,7 +13,7 @@ export default function LoginPage(): JSX.Element {
       <LoginForm
         className="w-lg"
         api={api}
-        navigate={router.push}
+        onLogin={() => router.push("/")}
         LinkComp={Link}
       />
     </div>

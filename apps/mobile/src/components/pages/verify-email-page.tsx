@@ -7,9 +7,5 @@ export function VerifyEmailPage() {
   const navigate = useNavigate();
   const user = useUserStore((x) => x.user!);
 
-  return (
-    <div className="grid h-screen w-screen place-items-center">
-      <EmailVerification api={api} navigate={navigate} user={user} />
-    </div>
-  );
+  return <EmailVerification api={api} navigate={navigate} user={user} />;
 }
