@@ -26,12 +26,7 @@ let refreshPromise: Promise<string | null> | null = null;
 async function getJwt() {
   try {
     // Get user's current JWT, prioritizing the local one
-    let jwt = localJwt;
-    if (!jwt) {
-      const data = await store.get(JWT_KEY);
-      if (!data) return null;
-      jwt = data;
-    }
+    let jwt = localJwt ?? (await store.get(JWT_KEY));
 
     // The user is not logged in
     if (!jwt) return null;

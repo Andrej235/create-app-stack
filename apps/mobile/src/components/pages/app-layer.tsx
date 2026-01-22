@@ -12,7 +12,7 @@ export function AppLayer() {
 
   const user = useQuery(api, "/users/me", {
     queryKey: ["user", "me"],
-    enabled: authStatus.data,
+    enabled: !!authStatus.data,
   });
 
   const setUser = useUserStore((state) => state.setUser);
@@ -20,10 +20,10 @@ export function AppLayer() {
     if (!user.data) return;
 
     setUser(user.data);
-  }, [user, setUser]);
+  }, [user.data, setUser]);
 
-  if (!authStatus.data) return <Navigate to="/login" replace />;
   if (authStatus.isLoading || user.isLoading) return <LoadingScreen />;
+  if (!authStatus.data) return <Navigate to="/login" replace />;
 
   return (
     <div className="max-w-full px-4 text-wrap wrap-break-word">

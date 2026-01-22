@@ -150,7 +150,7 @@ export function EmailVerification({
         <div className="grid w-full gap-2 md:grid-cols-2">
           <Button
             className="w-full"
-            disabled={otp.length !== 6}
+            disabled={otp.length !== 6 || !user}
             onClick={handleSubmitCode}
           >
             Verify

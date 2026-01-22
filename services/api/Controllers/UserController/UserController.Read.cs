@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Template.Dtos.Response.User;
 
@@ -5,6 +6,7 @@ namespace Template.Controllers.UserController;
 
 public partial class UserController
 {
+    [Authorize]
     [HttpGet("me")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
