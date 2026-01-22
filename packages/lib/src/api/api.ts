@@ -8,7 +8,7 @@ type Config = {
   baseUrl: string;
 
   addAuthHeaders: (request: RequestInit) => Promise<RequestInit>;
-  logIn: (api: Api, username: string, password: string) => Promise<boolean>;
+  login: (api: Api, username: string, password: string) => Promise<boolean>;
   logOut: (api: Api) => Promise<boolean>;
   isLoggedIn: (api: Api) => Promise<boolean>;
 };
@@ -26,7 +26,7 @@ export type Api = {
     cancel: () => void;
   };
 
-  logIn: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<boolean>;
   logOut: () => Promise<boolean>;
   isLoggedIn: () => Promise<boolean>;
   addAuthHeaders: (request: RequestInit) => Promise<RequestInit>;
@@ -44,7 +44,7 @@ export function createApi(config: Config): Api {
       });
     },
 
-    logIn: (username, password) => config.logIn(api, username, password),
+    login: (username, password) => config.login(api, username, password),
     logOut: () => config.logOut(api),
     isLoggedIn: () => config.isLoggedIn(api),
     addAuthHeaders: config.addAuthHeaders,

@@ -22,7 +22,6 @@ import {
   InputOTPSlot,
 } from "./common/input-otp";
 import { CountdownTimer } from "./countdown-timer";
-import { toast } from "sonner";
 
 export function EmailVerification({
   api,
@@ -184,13 +183,13 @@ export function EmailVerification({
             variant="link"
             className="px-2 text-sm"
             onClick={async () => {
-              const a = await api.logOut();
-              toast.info("You have been logged out. " + a);
+              const success = await api.logOut();
+              if (!success) return;
 
               // Force revalidation, without this app.tsx would just redirect the user to the dashboard
               await queryClient.resetQueries({
-                queryKey: ["isLoggedIn"],
-                exact: true,
+                queryKey: ["user", "me"],
+                exact: false,
               });
 
               await navigate("/login");

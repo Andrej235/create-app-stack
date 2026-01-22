@@ -31,7 +31,7 @@ export const getApi = cache(() =>
       return isOk;
     },
 
-    logIn: async () => {
+    login: async () => {
       throw new Error("Not implemented on server");
     },
     logOut: async () => {

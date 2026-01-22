@@ -85,7 +85,7 @@ export function LoginForm({
     validateField("email", formData.email);
     validateField("password", formData.password);
 
-    const isLoggedIn = await api.logIn(formData.email, formData.password);
+    const isLoggedIn = await api.login(formData.email, formData.password);
     if (isLoggedIn) onLogin();
   };
 

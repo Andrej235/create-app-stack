@@ -147,7 +147,7 @@ export const api = createApi({
     return !!jwt;
   },
 
-  logIn: async (api, username, password) => {
+  login: async (api, username, password) => {
     const { isOk, data } = await api.sendRequest(
       "/users/login",
       {

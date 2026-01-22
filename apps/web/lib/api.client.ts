@@ -18,7 +18,7 @@ export const api = createApi({
     return isOk;
   },
 
-  logIn: async (api, username, password) => {
+  login: async (api, username, password) => {
     const { isOk } = await api.sendRequest(
       "/users/login",
       {
