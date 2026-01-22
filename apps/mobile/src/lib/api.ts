@@ -12,10 +12,13 @@ export const api = createApi({
   },
 
   isLoggedIn: async (api: Api) => {
+    console.log("first");
+
     const { isOk } = await api.sendRequest("/users/check-auth", {
       method: "get",
     });
 
+    console.log("second", isOk);
     return isOk;
   },
 

@@ -23,7 +23,7 @@ export function useQuery<
         return getSseStream(api, route as SseEndpoints, options);
       }
 
-      const x = await api.sendRequest(
+      const req = await api.sendRequest(
         route,
         options && "method" in options
           ? (options as unknown as Exact<Request<TRoute>, Request<TRoute>>)
@@ -39,17 +39,18 @@ export function useQuery<
         },
       );
 
-      if (!x?.isOk)
-        throw new Error(x?.error?.message ?? "Something went wrong");
+      if (!req?.isOk)
+        throw new Error(req?.error?.message ?? "Something went wrong");
 
       if (options && "method" in options) {
-        if ("stream" in x) return x.stream;
-        throw new Error(x?.error?.message ?? "Something went wrong");
+        if ("stream" in req) return req.stream;
+        throw new Error(req?.error?.message ?? "Something went wrong");
       }
 
-      return x.data;
+      return req.data;
     },
     refetchOnWindowFocus: false,
+    retry: options?.retry ?? false,
     ...options,
     queryKey: options?.queryKey ?? [route],
   }) as QueryResponse<TRoute, TOptions>;
